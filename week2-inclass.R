@@ -1,5 +1,7 @@
-#this line has to be on the top of the file
+#this line always has to be on the top of the file
+#setting repo(autometically search all 7 storage to find packages)
 setRepositories()
+setRepositories(ind = 1:7)
 
 # setting working dir
 getwd()
