@@ -11,6 +11,7 @@
 
 setRepositories(ind = 1:7)
 
+
 #install.packages("devtools")
 library(devtools)
 #install_github('jhk0530/Rstat')
@@ -61,7 +62,8 @@ View(round(pv, 8))
 
 
 ## Self-Checking 4
-pnorm(185, 175, 8) - pnorm(180, 175, 8)
+p=pnorm(185, 175, 8) - pnorm(180, 175, 8)
+
 
 
 ## Self-Checking 5
@@ -131,6 +133,8 @@ plotForCLT(rpois, n = 10, lambda = 1)
 plotForCLT(rpois, n = 20, lambda = 1)
 plotForCLT(rpois, n = 30, lambda = 1)
 plotForCLT(rpois, n = 40, lambda = 1)
+plotForCLT(rpois, n = 80, lambda = 1)
+plotForCLT(rpois, n = 300, lambda = 1)
 
 # Sampling from the Negative Binomial distribution
 plotForCLT(rnbinom, n = 1, size = 1, p = .5)
