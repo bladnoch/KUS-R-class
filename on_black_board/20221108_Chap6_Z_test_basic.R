@@ -78,7 +78,7 @@ Height_2020yr <- rnorm(100, mean = 173.6, sd = 5.62)
 # Get Z-statistic
 Zstat <- z.test(Height_2020yr, mu=169.3, var=5.4^2)
 
-2*pnorm(-abs(Zstat)) # two-sided Z-test
+sample <- 2*pnorm(-abs(Zstat)) # two-sided Z-test
 1-pnorm(Zstat) # one-sided Z-test (2020 Height >= 169.3)
 pnorm(Zstat) # one-sided Z-test (2020 Height <= 169.3)
 
