@@ -6,6 +6,7 @@ setRepositories(ind = 1:7)
 
 ## Set working Dir.
 WORK_DIR <- "E:\\3.고려대_수업자료\\2.융합정보학\\2.Code\\20231004_lectureCode"
+WORK_DIR <- "/Users/doungukkim/Desktop/workspace/KUS-R-class"
 setwd(WORK_DIR)
 
 ## Quiz
