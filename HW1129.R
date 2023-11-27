@@ -50,7 +50,7 @@ summary(data)
 # Q1
 covid_data <- subset(data,Disease == "COVID19") #subset for covid19 positive
 covid_data
-covid19_sysBP <- mean(covid_data$sysBP) #mean sysBP those with covid19
+covid19_sysBP <- mcovid_data$sysBP #mean sysBP those with covid19
 covid19_sysBP
 
 Q2_Zstat <- z.test(covid19_sysBP, mu=128.65, var=16.5^2) 
@@ -61,31 +61,22 @@ Q2_Zstat
 # Q2
 covid_data <- subset(data,Disease == "COVID19") #subset for covid19 positive
 covid_data
-covid19_sysBP <- mean(covid_data$sysBP) #mean sysBP those with covid19
+
+covid19_sysBP <- (covid_data$sysBP) #mean sysBP those with covid19
 covid19_sysBP
-Q2_Zstat <- z.test2(covid19_sysBP, mu=128.65, var=16.5^2) 
-Q2_Zstat
 
-z.test <- function(input, mu, var){
-  z <- (mean(input) - mu) / (sqrt(var / length(input)))
-  return(z)
-}
+mean(covid19_sysBP)
+length(covid19_sysBP)
 
-
-covid19_sysBP_mean <- mean(covid_data$sysBP)
-covid19_sysBP_mean
-
-z_stat <- (covid19_sysBP_mean - 128.65) / (16.5/sqrt(n))
-z_stat
 
 1-pnorm(Q2_Zstat)
-1-pnorm(z_stat)
 
 #Q3
 
 gender_data <- subset(data,Gender=="1")
 gender_data
-male_HR <- mean(gender_data$HR)
+male_HR <- gender_data$HR
+mean(male_HR)
 male_HR
 
 Q3_Zstat <- z.test(male_HR,mu=74.62, var=11.1)
@@ -94,3 +85,15 @@ Q3_Zstat
 2*pnorm(-abs(Q3_Zstat)) # two-sided Z-test
 1-pnorm(Q3_Zstat) # one-sided Z-test (male_HR >= 74.62)
 pnorm(Q3_Zstat) # one-sided Z-test (male_HR <= 74.62)
+
+#Q5
+rest_data <- data$Resting_SaO2
+rest_data
+mean(rest_data)
+
+Q5_Zstat <- z.test(rest_data,mu=96.0245,var=8.995)
+Q5_Zstat
+
+1-pnorm(Q5_Zstat)
+2*pnorm(-abs(Q5_Zstat))
+
