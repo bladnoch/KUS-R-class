@@ -11,14 +11,40 @@ data("ToothGrowth")
 View(ToothGrowth)
 str(ToothGrowth)
 
-ToothGrowth$dose <- factor(ToothGrowth$dose)
-
+ToothGrowth$dose <- factor(ToothGrowth$dose) #0.5, 1 , 2 3가지 경우만 있기 때문에 factor로 변환한다.ㅏ
+ #이렇게 3가지 경우를 비교하고 싶기 때문에 2가지를 비교하는 t test는 불가능
+#이론을 완벽하게 이용하기 보단 p value를 알 수 있으면 장떙
 
 hist(ToothGrowth$dose)
 summary(ToothGrowth$supp)
 
+summary(aov(len~dose, data = ToothGrowth))
+#[[1]][1,5]는 전체 대이터 서머리중 일부만 보기위해 사용 
+#Anova
 summary(aov(len~dose, data = ToothGrowth))[[1]][1,5]
+
+#KS test
 kruskal.test(len ~ dose, data = ToothGrowth)$p.value
+
+boxplot(len~dose, data = ToothGrowth)$pvalue
+## ANOVA and kruskal test for Multiple group comparisons
+
+
+#sample 문제 
+#3 groups of random sample data
+GroupA <- rnorm(20,100,sd=4)
+GroupB <- rnorm(20,100,sd=4)
+GroupC <- rnorm(20,100,sd=4)
+
+
+combinValue <- c(GroupA,GroupB,GroupC)
+testData <- data.frame(combinValue,
+                      Group = factor(rep(c("phase1","phase2","phase3"),each=20)))
+
+boxplot(combinValue ~ Group, data = testData)
+summary(aov(combinValue~Group, data = testData))[[1]][1,5]
+#sample 문제 끝
+
 
 
 ## Association test for two continuous Random variables
