@@ -2,7 +2,7 @@
 ## Homework 3.                  ##
 ## for Probability & Statistics ##
 ## Dounguk Kim                  ##
-## 2023-11-22                   ##
+## 2023-12-10.                  ##
 ##################################
 
 
