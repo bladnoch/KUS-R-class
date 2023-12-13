@@ -38,6 +38,17 @@ summary(data2021)
 summary(data2022)
 head(data)
 
+# Simulating data for two groups
+group1 <- rnorm(30, mean = 50, sd = 10)  # Group 1 data with normal distribution
+group2 <- rnorm(30, mean = 70, sd = 10)  # Group 2 data with normal distribution
+
+# Performing the Wilcoxon rank-sum test
+test_result <- wilcox.test(group1, group2)
+
+# Displaying the result
+print(test_result)
+
+
 #----------------------------------------------------------------------------------------------function
 
 #--------------------------------------------------------------------------------------------------quiz
