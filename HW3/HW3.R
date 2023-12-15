@@ -41,13 +41,6 @@ data3 <- read.table("Data3.txt", sep="\t")
 data3 <- data.frame(fread("Data3.txt", sep="\t", head=T, stringsAsFactors = T))
 data3
 
-summary(data2020)
-summary(data2021)
-summary(data2022)
-
-
-
-
 #----------------------------------------------------------------------------------------------function
 
 #--------------------------------------------------------------------------------------------------quiz
@@ -135,6 +128,18 @@ data2
 FM <- subset(data2, Gender == "Female")
 M <- subset(data2, Gender == "male")
 
+mean_male <- mean(M$numTardy)
+mean_male
+
+mean_female <- mean(FM$numTardy)
+mean_female
+
+sd_male <- sd(M$numTardy)
+sd_female <- sd(FM$numTardy)
+
+kimStat <- abs(mean_male - mean_female) / ((sd_male + sd_female) / 8)
+kimStat
+
 #----------------------------------------------------------------------------------------------------Q7
 
 wilcox.test(numTardy ~ Gender, data2, exact = FALSE)
@@ -142,8 +147,6 @@ wilcox.test(numTardy ~ Gender, data2, exact = FALSE)
 #----------------------------------------------------------------------------------------------------Q8
 
 t.test(FM$numTardy,M$numTardy)
-
-#----------------------------------------------------------------------------------------------------Q9
 
 #----------------------------------------------------------------------------------------------------Q10
 t.test(Age ~ Gender,data3)$p.value
