@@ -166,7 +166,7 @@ sd_male <- sd(M$numTardy)
 sd_female <- sd(FM$numTardy)
 
 kimStat <- abs(mean_male - mean_female) / ((sd_male + sd_female) / 8)
-kimStat
+kimStat # 5.61831
 
 #----------------------------------------------------------------------------------------------------Q7
 
