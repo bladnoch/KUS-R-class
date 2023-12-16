@@ -129,10 +129,10 @@ boxplot(HW2 ~ group, data = combined_data)
 
 #----------------------------------------------------------------------------------------------------Q5
 
-cor.test(data2020$HW3, data2020$Final)
-
-cor.test(data2021$HW3, data2021$Final)
-
+cor.test(data2020$HW3, data2020$Final) #p-value = 2.021e-06
+cor.test(data2020$Midterm, data2020$Final) #p-value = 0.0001334
+cor.test(data2021$HW3, data2021$Final) #p-value = 1.917e-06
+cor.test(data2021$Midterm, data2021$Final) #p-value = 0.05228
 
 
 # 2020년 데이터를 사용한 산점도
@@ -162,8 +162,11 @@ mean_male
 mean_female <- mean(FM$numTardy)
 mean_female
 
-sd_male <- sd(M$numTardy)
+sd_male <- sd(M$numTardy) 
+sd_male # 2.1475
+
 sd_female <- sd(FM$numTardy)
+sd_female # 1.333333
 
 kimStat <- abs(mean_male - mean_female) / ((sd_male + sd_female) / 8)
 kimStat # 5.61831
