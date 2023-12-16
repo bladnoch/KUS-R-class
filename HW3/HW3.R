@@ -57,10 +57,6 @@ sel2020$group <-2020
 sel2021$group <-2021
 sel2022$group <-2022
 
-v2020$group <- 202021
-v2021$group <- 202021
-v2022$group <- 2022
-
 # 데이터 결합
 combined_data <- rbind(sel2020,sel2021,sel2022)
 combined_data
@@ -76,12 +72,14 @@ anova_result <- aov(Midterm ~ group, data = combined_data)
 summary(anova_result)
 
 # t.test 수행
-t.test(sel2020$HW2,sel2022$HW2)
-t.test(sel2021$HW2,sel2022$HW2)
+t.test(sel2020$HW2,sel2022$HW2,alternative = "greater")
+t.test(sel2021$HW2,sel2022$HW2,alternative = "greater")
 t.test(sel2020$HW2,sel2021$HW2)
 
-# -----test
+# t.test로 2020,2021의 그룹과 2022 그룹 테스트
+# t.test 수행 (2020+2021), (2022)
 
+# HW1, HW2, HW3, midterm
 v2020 <- data2020 %>% select(HW1,HW2,HW3,Midterm)
 v2021 <- data2021 %>% select(HW1,HW2,HW3,Midterm)
 v2022 <- data2022 %>% select(HW1,HW2,HW3,Midterm)
@@ -96,13 +94,14 @@ combined202021 <- subset(combined_test,group == 202021)
 combined202021
 combined2022 <- subset(combined_test,group == 2022)
 combined2022
-t.test(combined202021$HW1,combined2022$HW1, alternative = "less")
+
 t.test(combined202021$HW1,combined2022$HW1, alternative = "greater")
+t.test(combined202021$Midterm,combined2022$Midterm, alternative = "greater")
 
 #----------------------------------------------------------------------------------------------------Q2
 
 # 각 그룹의 데이터 분포를 시각화
-boxplot(HW2 ~ group, data = combined_data)
+boxplot(Midterm ~ group, data = combined_test)
 
 #----------------------------------------------------------------------------------------------------Q3
 
