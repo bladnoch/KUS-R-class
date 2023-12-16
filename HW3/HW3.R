@@ -63,11 +63,11 @@ combined_data
 
 # ANOVA 테스트 수행
 anova_result <- aov(HW1 ~ group, data = combined_data)
-summary(anova_result)
+summary(anova_result) #5.7e-07
 anova_result <- aov(HW2 ~ group, data = combined_data)
-summary(anova_result)
+summary(anova_result) #1.84e-07 ***
 anova_result <- aov(HW3 ~ group, data = combined_data)
-summary(anova_result)
+summary(anova_result) 
 anova_result <- aov(Midterm ~ group, data = combined_data)
 summary(anova_result)
 
