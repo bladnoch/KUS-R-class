@@ -74,10 +74,11 @@ summary(anova_result)
 # t.test 수행
 t.test(sel2020$HW2,sel2022$HW2,alternative = "greater") #3.852e-08
 t.test(sel2020$HW2,sel2022$HW2,alternative = "less") #p 1
-t.test(sel2020$HW2,sel2022$HW2) #7.7703e-08
+t.test(sel2020$HW2,sel2022$HW2) # 7.7703e-08
+
 t.test(sel2021$HW2,sel2022$HW2,alternative = "greater") #p 0.0005605
 t.test(sel2021$HW2,sel2022$HW2,alternative = "less") #p 0.9994
-t.test(sel2021$HW2,sel2022$HW2) #p 0.001121
+t.test(sel2021$HW2,sel2022$HW2) # p 0.001121
 
 # t.test로 2020,2021의 그룹과 2022 그룹 테스트
 # t.test 수행 (2020+2021), (2022)
