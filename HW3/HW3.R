@@ -80,6 +80,7 @@ t.test(sel2021$HW2,sel2022$HW2,alternative = "greater") #p 0.0005605
 t.test(sel2021$HW2,sel2022$HW2,alternative = "less") #p 0.9994
 t.test(sel2021$HW2,sel2022$HW2) # p 0.001121
 
+
 # t.test로 2020,2021의 그룹과 2022 그룹 테스트
 # t.test 수행 (2020+2021), (2022)
 
@@ -99,8 +100,10 @@ combined202021
 combined2022 <- subset(combined_test,group == 2022)
 combined2022
 
-t.test(combined202021$HW1,combined2022$HW1, alternative = "greater")
-t.test(combined202021$Midterm,combined2022$Midterm, alternative = "greater")
+t.test(combined202021$HW1,combined2022$HW1, alternative = "greater") #p-value = 1.017e-07
+t.test(combined202021$HW2,combined2022$HW2, alternative = "greater") #p-value = 2.754e-06
+t.test(combined202021$HW3,combined2022$HW3, alternative = "greater") #p-value = 1.925e-05
+t.test(combined202021$Midterm,combined2022$Midterm, alternative = "greater") #p-value = 0.008447
 
 #----------------------------------------------------------------------------------------------------Q2
 
