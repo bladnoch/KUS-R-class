@@ -57,6 +57,10 @@ sel2020$group <-2020
 sel2021$group <-2021
 sel2022$group <-2022
 
+v2020$group <- 202021
+v2021$group <- 202021
+v2022$group <- 2022
+
 # 데이터 결합
 combined_data <- rbind(sel2020,sel2021,sel2022)
 combined_data
@@ -76,6 +80,24 @@ t.test(sel2020$HW2,sel2022$HW2)
 t.test(sel2021$HW2,sel2022$HW2)
 t.test(sel2020$HW2,sel2021$HW2)
 
+# -----test
+
+v2020 <- data2020 %>% select(HW1,HW2,HW3,Midterm)
+v2021 <- data2021 %>% select(HW1,HW2,HW3,Midterm)
+v2022 <- data2022 %>% select(HW1,HW2,HW3,Midterm)
+
+v2020$group <- 202021
+v2021$group <- 202021
+v2022$group <- 2022
+
+combined_test <- rbind(v2020,v2021,v2022)
+combined_test
+combined202021 <- subset(combined_test,group == 202021)
+combined202021
+combined2022 <- subset(combined_test,group == 2022)
+combined2022
+t.test(combined202021$HW1,combined2022$HW1, alternative = "less")
+t.test(combined202021$HW1,combined2022$HW1, alternative = "greater")
 
 #----------------------------------------------------------------------------------------------------Q2
 
