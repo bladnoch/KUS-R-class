@@ -193,8 +193,6 @@ chisq.test(data3$HaveCough, data3$Severity_Group)$p.value
 
 boxplot(Gender ~ Severity_Group, data = data3)
 
-library(ggplot2)
-
 # 교차표 생성
 table_data <- table(data3$Gender, data3$Severity_Group)
 
