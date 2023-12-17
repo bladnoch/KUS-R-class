@@ -67,9 +67,9 @@ summary(anova_result) #5.7e-07
 anova_result <- aov(HW2 ~ group, data = combined_data)
 summary(anova_result) #1.84e-07 ***
 anova_result <- aov(HW3 ~ group, data = combined_data)
-summary(anova_result) 
+summary(anova_result) #8.05e-05 ***
 anova_result <- aov(Midterm ~ group, data = combined_data)
-summary(anova_result)
+summary(anova_result) #0.000155
 
 # t.test 수행
 t.test(sel2020$HW2,sel2022$HW2,alternative = "greater") #3.852e-08
@@ -108,7 +108,8 @@ t.test(combined202021$Midterm,combined2022$Midterm, alternative = "greater") #p-
 #----------------------------------------------------------------------------------------------------Q2
 
 # 각 그룹의 데이터 분포를 시각화
-boxplot(Midterm ~ group, data = combined_test)
+boxplot(HW2 ~ group, data = combined_data)
+boxplot(HW2 ~ group, data = combined_test)
 
 #----------------------------------------------------------------------------------------------------Q3
 
@@ -126,11 +127,14 @@ summary(anova_result) # 0.000155
 
 boxplot(HW1 ~ group, data = combined_data)
 boxplot(HW2 ~ group, data = combined_data)
+boxplot(HW3 ~ group, data = combined_data)
+boxplot(Midterm ~ group, data = combined_data)
 
 #----------------------------------------------------------------------------------------------------Q5
 
 cor.test(data2020$HW3, data2020$Final) #p-value = 2.021e-06
 cor.test(data2020$Midterm, data2020$Final) #p-value = 0.0001334
+
 cor.test(data2021$HW3, data2021$Final) #p-value = 1.917e-06
 cor.test(data2021$Midterm, data2021$Final) #p-value = 0.05228
 
@@ -147,6 +151,12 @@ ggplot(data2021, aes(x = HW3, y = Final)) +
   geom_smooth(method = "lm") +
   labs(title = "Relationship between HW3 and Final in 2021", x = "HW3 Score", y = "Final Score")
 
+# 2021년 데이터를 사용한 산점도
+ggplot(data2021, aes(x = Midterm, y = Final)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between Midterm and Final in 2021", x = "Midterm Score", y = "Final Score")
+
 
 #----------------------------------------------------------------------------------------------------Q6
 
@@ -156,11 +166,14 @@ data2
 FM <- subset(data2, Gender == "Female")
 M <- subset(data2, Gender == "male")
 
+FM
+M
+
 mean_male <- mean(M$numTardy)
-mean_male
+mean_male # 4.888889
 
 mean_female <- mean(FM$numTardy)
-mean_female
+mean_female # 2.444444
 
 sd_male <- sd(M$numTardy) 
 sd_male # 2.1475
@@ -171,13 +184,34 @@ sd_female # 1.333333
 kimStat <- abs(mean_male - mean_female) / ((sd_male + sd_female) / 8)
 kimStat # 5.61831
 
+# 모의 실험
+n_simulations <- 100000  # 시뮬레이션 횟수
+simulated_kimStats <- numeric(n_simulations)
+
+for(i in 1:n_simulations) {
+  # 귀무 가설 하에서 두 그룹의 데이터를 무작위 생성
+  simulated_group1 <- rnorm(length(M$numTardy), mean_male, sd_male)
+  simulated_group2 <- rnorm(length(FM$numTardy), mean_female, sd_female)
+  
+  # kimStat 계산
+  sim_mean_male <- mean(simulated_group1)
+  sim_mean_female <- mean(simulated_group2)
+  sim_sd_male <- sd(simulated_group1)
+  sim_sd_female <- sd(simulated_group2)
+  simulated_kimStats[i] <- abs(sim_mean_male - sim_mean_female) / ((sim_sd_male + sim_sd_female) / 8)
+}
+
+# p-값 계산
+p_value <- sum(simulated_kimStats >= kimStat) / n_simulations
+p_value # 0.53298
+
 #----------------------------------------------------------------------------------------------------Q7
 
-wilcox.test(numTardy ~ Gender, data2, exact = FALSE)
+wilcox.test(numTardy ~ Gender, data2, exact = FALSE)$p.value
 
 #----------------------------------------------------------------------------------------------------Q8
 
-t.test(FM$numTardy,M$numTardy)
+t.test(FM$numTardy,M$numTardy)$p.value
 
 #----------------------------------------------------------------------------------------------------Q10
 t.test(Age ~ Gender,data3)$p.value
@@ -209,7 +243,6 @@ data3
 summary(aov(Age ~ Severity_Group, data = data3))[[1]][1,5]
 summary(aov(Height_CM ~Severity_Group, data = data3))[[1]][1,5]
 summary(aov(Weight_KG ~Severity_Group, data = data3))[[1]][1,5]
-summary(data3$Severity_Group)
 summary(aov(sysBP ~Severity_Group, data = data3))[[1]][1,5]
 summary(aov(HR ~Severity_Group, data = data3))[[1]][1,5]
 summary(aov( Resting_SaO2~Severity_Group, data = data3))[[1]][1,5]
@@ -218,20 +251,8 @@ summary(aov(FEV1pp_utah ~Severity_Group, data = data3))[[1]][1,5]
 summary(aov(FVCpp_utah ~Severity_Group, data = data3))[[1]][1,5]
 summary(aov(FEV1_FVC_utah ~Severity_Group, data = data3))[[1]][1,5]
 
-chisq.test(data3$Gender, data3$Severity_Group)$p.value
-chisq.test(data3$Race,data3$Severity_Group)$p.value
-chisq.test(data3$HaveCough, data3$Severity_Group)$p.value
+chisq.test(data3$Severity_Group,data3$Gender)$p.value # chisq.test(독립, 범주)
+chisq.test(data3$Severity_Group,data3$Race)$p.value
+chisq.test( data3$Severity_Group,data3$HaveCough)$p.value
 
-boxplot(Gender ~ Severity_Group, data = data3)
 
-# 교차표 생성
-table_data <- table(data3$Gender, data3$Severity_Group)
-
-# 바 그래프로 시각화
-ggplot(as.data.frame(table_data), aes(x = Var1, y = Freq, fill = Var2)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  labs(title = "Bar Graph of Gender vs Severity Group",
-       x = "Gender",
-       y = "Frequency",
-       fill = "Severity Group") +
-  theme_minimal()
