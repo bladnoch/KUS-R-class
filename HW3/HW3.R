@@ -184,26 +184,21 @@ sd_female # 1.333333
 kimStat <- abs(mean_male - mean_female) / ((sd_male + sd_female) / 8)
 kimStat # 5.61831
 
-# 모의 실험
-n_simulations <- 100000  # 시뮬레이션 횟수
-simulated_kimStats <- numeric(n_simulations)
+## Permutation t-test
 
-for(i in 1:n_simulations) {
-  # 귀무 가설 하에서 두 그룹의 데이터를 무작위 생성
-  simulated_group1 <- rnorm(length(M$numTardy), mean_male, sd_male)
-  simulated_group2 <- rnorm(length(FM$numTardy), mean_female, sd_female)
-  
-  # kimStat 계산
-  sim_mean_male <- mean(simulated_group1)
-  sim_mean_female <- mean(simulated_group2)
-  sim_sd_male <- sd(simulated_group1)
-  sim_sd_female <- sd(simulated_group2)
-  simulated_kimStats[i] <- abs(sim_mean_male - sim_mean_female) / ((sim_sd_male + sim_sd_female) / 8)
+kimStat <- abs(mean_male - mean_female) / ((sd_male + sd_female) / 8)
+
+
+null_kimStat <- c()
+numOfRepeat <- 1000
+
+for(i in 1:numOfRepeat){
+  null_kimStat[i] <- as.numeric(t.test(numTardy ~ sample(Gender),data2)$statistic)
 }
 
-# p-값 계산
-p_value <- sum(simulated_kimStats >= kimStat) / n_simulations
-p_value # 0.53298
+Pval <- (sum(abs(null_kimStat) >= abs(kimStat)) + 1) / numOfRepeat
+Pval #0.001
+
 
 #----------------------------------------------------------------------------------------------------Q7
 
