@@ -49,7 +49,7 @@ summary(aov(combinValue~Group, data = testData))[[1]][1,5]
 
 ## Association test for two continuous Random variables
 data(mtcars)
-
+data
 A <- mtcars$mpg
 B <- mtcars$wt
 
