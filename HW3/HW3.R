@@ -70,7 +70,7 @@ anova_result <- aov(HW3 ~ group, data = combined_data)
 summary(anova_result) #8.05e-05 ***
 anova_result <- aov(Midterm ~ group, data = combined_data)
 summary(anova_result) #0.000155
-
+sel2020$HW2
 # t.test 수행
 t.test(sel2020$HW2,sel2022$HW2,alternative = "greater") #3.852e-08
 t.test(sel2020$HW2,sel2022$HW2,alternative = "less") #p 1
@@ -92,7 +92,7 @@ v2022 <- data2022 %>% select(HW1,HW2,HW3,Midterm)
 v2020$group <- 202021
 v2021$group <- 202021
 v2022$group <- 2022
-
+v2022$group
 combined_test <- rbind(v2020,v2021,v2022)
 combined_test
 combined202021 <- subset(combined_test,group == 202021)
@@ -184,20 +184,39 @@ sd_female # 1.333333
 kimStat <- abs(mean_male - mean_female) / ((sd_male + sd_female) / 8)
 kimStat # 5.61831
 
-## Permutation t-test
 
-kimStat <- abs(mean_male - mean_female) / ((sd_male + sd_female) / 8)
+## Permutation t-test using kimStat
 
+# 실제 데이터에 대한 kimStat 계산
+mean_male <- mean(M$numTardy)
+mean_female <- mean(FM$numTardy)
+sd_male <- sd(M$numTardy)
+sd_female <- sd(FM$numTardy)
+obs_kimStat <- abs(mean_male - mean_female) / ((sd_male + sd_female) / 8)
 
-null_kimStat <- c()
+# 모의 실험을 위한 null_kimStat 초기화
+null_kimStat <- numeric(numOfRepeat)
 numOfRepeat <- 1000
 
+# 모의 실험 수행
 for(i in 1:numOfRepeat){
-  null_kimStat[i] <- as.numeric(t.test(numTardy ~ sample(Gender),data2)$statistic)
+  # 성별 레이블을 무작위로 섞기
+  shuffled_gender <- sample(data2$Gender)
+  
+  # 무작위로 섞인 데이터에 대한 평균과 표준편차 계산
+  mean_male_shuffled <- mean(data2$numTardy[shuffled_gender == "male"])
+  mean_female_shuffled <- mean(data2$numTardy[shuffled_gender == "Female"])
+  sd_male_shuffled <- sd(data2$numTardy[shuffled_gender == "male"])
+  sd_female_shuffled <- sd(data2$numTardy[shuffled_gender == "Female"])
+  
+  # 무작위 데이터에 대한 kimStat 계산
+  null_kimStat[i] <- abs(mean_male_shuffled - mean_female_shuffled) / ((sd_male_shuffled + sd_female_shuffled) / 8)
 }
 
-Pval <- (sum(abs(null_kimStat) >= abs(kimStat)) + 1) / numOfRepeat
-Pval #0.001
+# p-value 계산
+Pval <- (sum(abs(null_kimStat) >= abs(obs_kimStat)) + 1) / numOfRepeat
+Pval
+
 
 
 #----------------------------------------------------------------------------------------------------Q7
